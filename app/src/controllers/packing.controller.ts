@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, HttpCode, Post } from "@nestjs/common";
 import { Box } from "src/models/box.model";
 import { Product } from "src/models/product.model";
 import { AllocateBoxesOperation } from "src/operations/allocate-boxes.opertion";
@@ -14,6 +14,7 @@ export class PackingController {
     {}
 
     @Post()
+    @HttpCode(200)
     async pack(
         @Body() packageRequest: PackingOrderRequest
     ) {
