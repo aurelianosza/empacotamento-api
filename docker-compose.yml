@@ -1,0 +1,12 @@
+version : "3.0"
+
+services:
+  app:
+    image: node:20-alpine
+    container_name: empacotamento-api
+    working_dir: /usr/src/app
+    ports:
+      - 3000:3000
+    volumes:
+      - "./app:/usr/src/app"
+    command: sh ./docker-entrypoint.sh

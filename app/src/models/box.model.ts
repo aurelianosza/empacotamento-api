@@ -15,62 +15,6 @@ export class Box implements VolumeItem {
 
 	stacks: ProductStack[];
 
-    static allocateBoxes(products: Product[]) {
-        const boxes: Box[] = [];
-        let productsWithoutBoxes: Product[] = [];
-
-        // todo: resolve this service injection
-        const service = new BoxDimensionsService();
-
-        const groupedProducts = service.organizeGroups(products);
-
-        let currentBox: Box|null|undefined = null;
-        let selectedProduct: Product|null|undefined = undefined;
-        for (const group  of Object.keys(service.getAvailableGroupDimensions()) as GroupLengths[]) {
-            if (group.toString() == "colossus") {
-                continue;
-            }
-
-            const reamingProductGroup = groupedProducts[group]
-                ?.sort((productA, productB) => productB.height - productA.height)
-                ?? [];
-
-            while (
-                reamingProductGroup.length > 0 ||
-                selectedProduct
-            ) {
-                selectedProduct = selectedProduct ?? reamingProductGroup.shift();
-
-                if (!currentBox) {
-                    currentBox = Box.getBoxForGroup(group);
-                }
-
-                try {
-                    currentBox.addProduct(selectedProduct!);
-                    selectedProduct = null;
-                } catch (exception) {
-                    if (exception instanceof StackBoxOverflow) {
-                        boxes.push(currentBox);
-                        currentBox = null;
-                        continue;
-                    }
-                    throw exception;
-                }
-            }
-        }
-
-        if (currentBox) {
-            boxes.push(currentBox);
-        }
-
-        productsWithoutBoxes = groupedProducts['colossus'];
-
-        return {
-            boxes,
-            productsWithoutBoxes
-        };
-    }
-
 	static getBoxForGroup (groupName: GroupLengths): Box
 	{
         // todo: resolve this service injection

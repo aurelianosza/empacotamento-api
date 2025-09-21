@@ -2,9 +2,13 @@ import { Module } from '@nestjs/common';
 import { BoxDimensionsInterface } from './services/interfaces/box-dimensions.interface';
 import { BoxDimensionsService } from './services/box-dimensions.service';
 import { PackingController } from './controllers/packing.controller';
+import { AllocateBoxesOperation } from './operations/allocate-boxes.opertion';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
-  imports: [],
+  imports: [
+    HttpModule
+  ],
   controllers: [
     PackingController
   ],
@@ -12,7 +16,8 @@ import { PackingController } from './controllers/packing.controller';
     {
       provide: BoxDimensionsInterface,
       useClass: BoxDimensionsService
-    }
+    },
+    AllocateBoxesOperation
   ],
 })
 export class AppModule {}
