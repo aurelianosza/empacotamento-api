@@ -85,8 +85,8 @@ export class BoxDimensionsService implements BoxDimensionsInterface {
         return grouped;
     }
 
-    getAvailableGroupDimensions(): Array<VolumeItem>
+    getAvailableGroupDimensions(): Record<GroupLengths, ProductGroup>
     {
-        return BoxDimensionsService.availableBoxesDimensions;
+        return BoxDimensionsService.productGroupDimensions;
     }
 }

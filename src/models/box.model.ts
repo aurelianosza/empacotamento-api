@@ -128,7 +128,7 @@ export class Box implements VolumeItem {
 	{
         const service = new BoxDimensionsService();
 
-		const dimensions = service.getDimensionsForGroup[groupName];
+		const dimensions = service.getAvailableGroupDimensions()[groupName];
 
 		const productStack = ProductStack.makeProductStackFromDimensions({
 			length: dimensions.maxLength,
