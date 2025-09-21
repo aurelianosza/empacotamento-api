@@ -1,10 +1,18 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { BoxDimensionsInterface } from './services/interfaces/box-dimensions.interface';
+import { BoxDimensionsService } from './services/box-dimensions.service';
+import { PackingController } from './controllers/packing.controller';
 
 @Module({
   imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [
+    PackingController
+  ],
+  providers: [
+    {
+      provide: BoxDimensionsInterface,
+      useClass: BoxDimensionsService
+    }
+  ],
 })
 export class AppModule {}
