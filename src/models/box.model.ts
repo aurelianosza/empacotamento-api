@@ -16,7 +16,7 @@ export class Box implements VolumeItem {
 	stacks: ProductStack[];
 
     static allocateBoxes(products: Product[]) {
-        const usedBoxes: Box[] = [];
+        const boxes: Box[] = [];
         let productsWithoutBoxes: Product[] = [];
 
         // todo: resolve this service injection
@@ -50,7 +50,7 @@ export class Box implements VolumeItem {
                     selectedProduct = null;
                 } catch (exception) {
                     if (exception instanceof StackBoxOverflow) {
-                        usedBoxes.push(currentBox);
+                        boxes.push(currentBox);
                         currentBox = null;
                         continue;
                     }
@@ -60,13 +60,13 @@ export class Box implements VolumeItem {
         }
 
         if (currentBox) {
-            usedBoxes.push(currentBox);
+            boxes.push(currentBox);
         }
 
         productsWithoutBoxes = groupedProducts['colossus'];
 
         return {
-            usedBoxes,
+            boxes,
             productsWithoutBoxes
         };
     }

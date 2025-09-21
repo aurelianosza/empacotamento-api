@@ -4,6 +4,7 @@ import { Product } from "src/models/product.model";
 import { AdapterPackOrderPipe } from "src/pipes/adapter-pack-order.pipe";
 import { OrderBag } from "src/types/dto/requests/order-bag.dto";
 import { PackingOrderRequest } from "src/types/dto/requests/packing-order.dto";
+import { OrderBagResponse } from "src/types/dto/response/order-bag-response.dto";
 
 @Controller("pack-order")
 export class PackingController {
@@ -24,13 +25,13 @@ export class PackingController {
                 const boxDetail = Box.allocateBoxes(order.products);
 
                 return {
-                    pedido_id : order.id,
-                    caixas: boxDetail.usedBoxes
+                    id : Number(order.id),
+                    boxes: boxDetail.boxes,
+                    productsWithoutBoxes: boxDetail.productsWithoutBoxes
                 }
-
             });
 
-        return adjustedOrders;
-
+        return new OrderBagResponse(adjustedOrders)
+            .respond();
     }
 }
